@@ -1,30 +1,17 @@
-# Use the official lightweight Python image
-FROM python:3.10-slim
+# Base image with Geo libraries and Python
+FROM kartoza/geopandas:latest
 
-# Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-
-# Set working directory inside the container
+# Set workdir
 WORKDIR /app
 
-# Install system-level dependencies needed by geopandas and shapely
-RUN apt-get update && apt-get install -y \
-    gdal-bin \
-    libgdal-dev \
-    build-essential \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install Python dependencies
-COPY requirements.txt .
-RUN pip install --upgrade pip
-RUN pip install -r requirements.txt
-
-# Copy application code
+# Copy code
 COPY . .
 
-# Expose the port used by the Dash app
+# Install additional Python packages if needed
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Expose Dash app port
 EXPOSE 8050
 
-# Command to run the app
+# Run the app
 CMD ["python", "main.py"]
