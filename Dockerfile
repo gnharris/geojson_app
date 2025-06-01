@@ -1,16 +1,16 @@
-# Base image with Geo libraries and Python
-FROM kartoza/geopandas:latest
+# Use a public geopandas image that includes shapely, fiona, pyproj, etc.
+FROM geopandas/geopandas:latest
 
-# Set workdir
+# Set working directory
 WORKDIR /app
 
-# Copy code
+# Copy all files to container
 COPY . .
 
-# Install additional Python packages if needed
-RUN pip install --no-cache-dir -r requirements.txt
+# Install additional Python packages
+RUN pip install --no-cache-dir dash pandas
 
-# Expose Dash app port
+# Expose port for Dash
 EXPOSE 8050
 
 # Run the app
