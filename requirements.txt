@@ -1,4 +1,6 @@
 dash
-pandas
+dash-bootstrap-components
+dash-leaflet
 geopandas
 shapely
+pandas
